@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
-import { getPrimaryNavigation } from '../lib/api'
+import { getAllPagesBySlug, getPrimaryNavigation } from '../lib/api'
 import Layout from '../components/layout'
 import Header from '../components/header'
 import Footer from '../components/footer'
@@ -35,7 +35,7 @@ export default function Home({ fullMenu }) {
           exit={{ opacity: 0 }}
           transition={{duration: .25}}
         >
-          <p>Homepage</p>
+          <p>Internal page</p>
 
         </motion.div>
 
@@ -56,5 +56,14 @@ export async function getStaticProps({ preview = false }) {
   const fullMenu = await getPrimaryNavigation(preview)
   return {
     props: {fullMenu, preview},
+  }
+}
+
+export async function getStaticPaths() {
+  const allPages = await getAllPagesBySlug()
+
+  return {
+    paths: allPages.edges.map(({ node }) => `/${node.slug}`) || [],
+    fallback: true,
   }
 }
