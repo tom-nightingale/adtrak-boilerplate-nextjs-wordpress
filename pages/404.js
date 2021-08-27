@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import Layout from '../components/layout'
-import Header from '../components/header'
-import Footer from '../components/footer'
-import Container from '../components/container'
-import FancyLink from '../components/fancyLink'
+import Layout from '@/components/layout'
+import Header from '@/components/header'
+import Footer from '@/components/footer'
+import Container from '@/components/container'
+import FancyLink from '@/components/fancyLink'
 import { motion } from 'framer-motion'
 
 export default function ErrorPage() {
@@ -23,8 +23,6 @@ export default function ErrorPage() {
           <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <Header />
-
       <Container>
 
         <h1>Error 404.</h1>
@@ -35,7 +33,7 @@ export default function ErrorPage() {
 
       </Container>
       
-      <Footer />
+      {/* <Footer /> */}
 
     </Layout>
   )

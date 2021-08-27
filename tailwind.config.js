@@ -86,8 +86,6 @@ module.exports = {
     textDecoration: ['group-hover', 'hover', 'focus', 'group-focus'],
   },
   plugins: [
-    require("tailwindcss-filters"),
-    require('@tailwindcss/forms'),
   ],
   corePlugins: {
     container: false,

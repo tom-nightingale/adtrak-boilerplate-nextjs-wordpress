@@ -3,10 +3,10 @@
 module.exports = {
   plugins: {
     'postcss-import': {},
-    'tailwindcss': {},
+    tailwindcss: {},
     'postcss-nested': {
       unwrap: ['screen'],
     },
-    'autoprefixer': {},
+    autoprefixer: {},
   },
 }

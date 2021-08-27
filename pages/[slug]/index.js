@@ -1,26 +1,27 @@
-import { getGlobalOptions, getPrimaryNavigation, getHomepageData } from '@/lib/api'
+import { getGlobalOptions, getPrimaryNavigation, getPageData, getAllPagesBySlug } from '@/lib/api'
 import Layout from '@/components/layout'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import Container from '@/components/container'
 import Seo from '@/components/seo'
-
 import { motion } from 'framer-motion'
 
-export default function Home({ globalOptions, primaryMenu, page }) {
+export default function Page({ globalOptions, primaryMenu, page }) {
   
   const pageData = page.page;
   const createFullPostMarkup = () => {
       return { __html: `<h1>${pageData.title}</h1>${ pageData.content }` }
   }
-  
+
   return (
 
-    <>      
-    
+    <>
+
       <Seo seo={pageData.seo} />
 
       <Layout>
+
+        Top level dynamic page
 
           <Header navItems={primaryMenu} logoUrl={globalOptions.siteOptions.siteOptions.siteLogo.mediaItemUrl} />
 
@@ -43,6 +44,8 @@ export default function Home({ globalOptions, primaryMenu, page }) {
                 </main>
 
                 <aside className="bg-gray-100 lg:w-1/3">
+
+                  
                   
                 </aside>
 
@@ -61,13 +64,20 @@ export default function Home({ globalOptions, primaryMenu, page }) {
   )
 }
 
-export async function getStaticProps({ preview = false }) {
-  
-  const globalOptions = await getGlobalOptions(preview)
-  const primaryMenu = await getPrimaryNavigation(preview)
-  const page = await getHomepageData(preview)
+export async function getStaticProps({ params }) {
+  const globalOptions = await getGlobalOptions()
+  const primaryMenu = await getPrimaryNavigation()
+  const page = await getPageData(params.slug);
 
   return {
-    props: {globalOptions, primaryMenu, page, preview},
+    props: {globalOptions, primaryMenu, page},
+  }
+}
+
+export async function getStaticPaths() {
+  const allPages = await getAllPagesBySlug();
+  return {
+    paths: allPages.edges.map(({ node }) => `/${node.slug}`) || [],
+    fallback: true,
   }
 }

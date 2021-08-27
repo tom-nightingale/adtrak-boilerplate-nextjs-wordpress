@@ -1,12 +1,9 @@
 /* Tailwind base/components */
-@tailwind base;
-@tailwind components;
-
-/* Default Typography Styles */
-/* @import '_typography.css'; */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
 
 /* Tailwind Utilities */
-@tailwind utilities;
+@import 'tailwindcss/utilities';
 
 
 /* Custom */
@@ -25,8 +22,7 @@ body {
 }
 
 a {
-  color: #0070f3;
-  text-decoration: none;
+  @apply transition duration-300;
 }
 
 a:hover {
@@ -36,4 +32,96 @@ a:hover {
 img {
   max-width: 100%;
   display: block;
+}
+
+/* Uses IntersectionObserver to identify when the viewport has scrolled, and then show back to top */
+#pixel-to-watch {
+  @apply absolute left-0;
+  width: 1px;
+  height: 1px;
+  top: 300px;
+}
+
+/* Type */ 
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  @apply mb-4 font-bold leading-snug;
+}
+
+h1 {
+  @apply text-3xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3 {
+  @apply text-xl;
+}
+
+.content {
+  > p {
+    @apply leading-relaxed mb-7;
+  }
+
+  a {
+    @apply inline-block;
+  }
+
+  ol, ul {
+    @apply pl-4 mb-8;
+  }
+
+  ol li, ul li {
+    @apply mb-2 leading-relaxed;
+  }
+
+  ul li {
+    @apply list-disc;
+  }
+
+  ol li {
+    @apply list-decimal;
+  }
+
+  blockquote {
+    @apply p-4 mb-8 bg-gray-100;
+  }
+}
+
+/* Buttons */
+.btn {
+  @apply px-4 py-2 transition duration-300 rounded;
+}
+
+.btn--primary {
+  @apply text-white bg-primary;
+}
+
+.btn--outline-white {
+  @apply text-white border-2 border-white;
+
+  &:hover {
+    @apply text-black bg-white;
+  }
+}
+
+.btn--outline-black {
+  @apply text-black border-2 border-black;
+
+  &:hover {
+    @apply text-white bg-black;
+  }
 }
