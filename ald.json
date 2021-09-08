@@ -1,0 +1,28 @@
+{
+    "locations": {
+        "uk": {
+            "locationID": "",
+            "locationName": "UK",
+            "calltag": "Call today on",
+            "areCode": "",
+            "seoNumber": "0800 000 0000",
+            "ppcNumber": "0115 959 8900"
+        },
+        "nottingham": {
+            "locationID": "",
+            "locationName": "Nottingham",
+            "calltag": "Call today on",
+            "areCode": "0115",
+            "seoNumber": "0800 000 0000",
+            "ppcNumber": "0115 000 0000"
+        },
+        "leicester": {
+            "locationID": "",
+            "locationName": "Leicester",
+            "calltag": "Call today on",
+            "areCode": "0116",
+            "seoNumber": "0800 000 0000",
+            "ppcNumber": "0116 000 0000"
+        }
+    }
+}

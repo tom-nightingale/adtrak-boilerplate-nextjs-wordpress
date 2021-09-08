@@ -1,13 +1,14 @@
-import { getGlobalOptions, getPrimaryNavigation, getHomepageData } from '@/lib/api'
+import { getHomepageData } from '@/lib/api'
 import Layout from '@/components/layout'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import Container from '@/components/container'
 import Seo from '@/components/seo'
-
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
-export default function Home({ globalOptions, primaryMenu, page }) {
+
+export default function Home({ page }) {  
   
   const pageData = page.page;
   const createFullPostMarkup = () => {
@@ -15,59 +16,65 @@ export default function Home({ globalOptions, primaryMenu, page }) {
   }
   
   return (
-
-    <>      
     
-      <Seo seo={pageData.seo} />
+    <Layout>
+        
+        <Seo seo={pageData.seo} />
 
-      <Layout>
+        <Header />
 
-          <Header navItems={primaryMenu} logoUrl={globalOptions.siteOptions.siteOptions.siteLogo.mediaItemUrl} />
+        <motion.div 
+          key="homepage"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{duration: .25}}
+        >
 
-          <motion.div 
-            key="homepage"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{duration: .25}}
-          >
+          <div className="relative w-full overflow-hidden min-h-75">
+            <Image 
+              src={pageData.featuredImage.node.sourceUrl}
+              alt={pageData.title}
+              layout="fill"
+              objectFit="cover"
+              className=""
+            />
+          </div>            
 
-            <Container>
+          <Container>
 
-              <div className="flex flex-col my-8 lg:flex-row lg:my-16 lg:space-x-12">
+            <div className="flex flex-col my-8 lg:flex-row lg:my-16 lg:space-x-12">
 
-                <main className="lg:w-2/3">
+              <main className="lg:w-2/3">
 
-                  <article className="content" dangerouslySetInnerHTML={createFullPostMarkup()} />
+                <article className="content" dangerouslySetInnerHTML={createFullPostMarkup()} />
 
-                </main>
+              </main>
 
-                <aside className="bg-gray-100 lg:w-1/3">
-                  
-                </aside>
+              <aside className="bg-gray-100 lg:w-1/3">
+                
+              </aside>
 
-              </div>
+            </div>
 
-            </Container>
+          </Container>
 
-          </motion.div>
+        </motion.div>
 
-          <Footer globalOptions={globalOptions} navItems={primaryMenu} />
+        <Footer />
 
-      </Layout>
-
-    </>
+    </Layout>
 
   )
 }
 
 export async function getStaticProps({ preview = false }) {
-  
-  const globalOptions = await getGlobalOptions(preview)
-  const primaryMenu = await getPrimaryNavigation(preview)
   const page = await getHomepageData(preview)
 
   return {
-    props: {globalOptions, primaryMenu, page, preview},
+    props: {
+      page,
+      preview 
+    },
   }
 }

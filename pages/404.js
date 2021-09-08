@@ -1,9 +1,11 @@
 import Head from 'next/head'
+
 import Layout from '@/components/layout'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import Container from '@/components/container'
 import FancyLink from '@/components/fancyLink'
+
 import { motion } from 'framer-motion'
 
 export default function ErrorPage() {

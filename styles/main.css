@@ -35,15 +35,14 @@ img {
 }
 
 /* Uses IntersectionObserver to identify when the viewport has scrolled, and then show back to top */
-#pixel-to-watch {
+/* #pixel-to-watch {
   @apply absolute left-0;
   width: 1px;
   height: 1px;
   top: 300px;
-}
+} */
 
 /* Type */ 
-
 h1,
 .h1,
 h2,
@@ -71,6 +70,7 @@ h3 {
   @apply text-xl;
 }
 
+/* Content */
 .content {
   > p {
     @apply leading-relaxed mb-7;
@@ -123,5 +123,35 @@ h3 {
 
   &:hover {
     @apply text-white bg-black;
+  }
+}
+
+/* Desktop Nav */
+.menu-primary,
+.menu-secondary {
+  
+  li {
+    @apply relative;
+  }
+
+  li:focus-within > .sub-menu {
+    @apply block opacity-100;
+  }
+
+  a:hover + .sub-menu {
+    @apply block opacity-100;
+  }
+
+  .sub-menu {
+    width: 250px;
+    @apply absolute z-40 hidden transform -translate-x-1/2 bg-white shadow-lg opacity-0 top-full left-1/2;
+
+    &:focus-within {
+      @apply visible block opacity-100;
+    }
+
+    &:hover {
+      @apply visible block opacity-100;
+    }
   }
 }

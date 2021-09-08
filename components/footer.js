@@ -1,10 +1,11 @@
-import Container from './container'
+import { useGlobalContext } from '../pages/_app'
+
 import Link from 'next/link'
 
-export default function Footer({ globalOptions, navItems }) {
-    
-    const siteOptions = globalOptions.siteOptions;
-    const allSettings = globalOptions.allSettings;
+import Container from '@/components/container'
+
+export default function Footer({  }) {
+    const globalData = useGlobalContext();
 
     return (
         <>
@@ -17,7 +18,7 @@ export default function Footer({ globalOptions, navItems }) {
                         <div className="w-full mb-8 lg:w-3/12">
                             <Link href="/">
                                 <a aria-label="Go to homepage" className="block lg:inline-block">
-                                    <img className="w-full mx-auto max-w-40" src={siteOptions.siteOptions.siteLogo.mediaItemUrl} alt="Logo"/>
+                                    <img className="w-full mx-auto max-w-40" src={globalData.siteOptions.siteLogo.mediaItemUrl} alt="Logo"/>
                                 </a>
                             </Link>
                         </div>
@@ -25,37 +26,39 @@ export default function Footer({ globalOptions, navItems }) {
                         <div className="w-full mb-8 lg:w-3/12">
                             <h6>Explore</h6>
                             <ul>
-                                {navItems.menuItems.edges.map((item, i) => {
-                                    return(
-                                        <li key={i}>
-                                            <Link href={`${item.node.path}`}>
-                                                <a className="">
-                                                    {item.node.label}
-                                                </a>
-                                            </Link>
-                                        </li>
-                                    )
+                                {globalData.primaryNav.edges.map((item, i) => {
+                                    if(!item.node.parentId) {
+                                        return(
+                                            <li key={i}>
+                                                <Link href={`${item.node.path}`}>
+                                                    <a className="">
+                                                        {item.node.label}
+                                                    </a>
+                                                </Link>
+                                            </li>
+                                        )
+                                    }
                                 })}                         
                             </ul>
                         </div>
 
                         <div className="w-full lg:w-1/2">
                             <p>Address: 
-                                {siteOptions.siteOptions.siteAddress.map((line, i) => {
+                                {globalData.siteOptions.siteAddress.map((line, i) => {
                                     return(
                                         <span className="block" key={i}>{line.addressLine}</span>
                                     )
                                 })}
                             </p>
-                            <p>Email: <a href={`mailto:${siteOptions.siteOptions.siteEmailAddress}`}>{siteOptions.siteOptions.siteEmailAddress}</a>
+                            <p>Email: <a href={`mailto:${globalData.siteOptions.siteEmailAddress}`}>{globalData.siteOptions.siteEmailAddress}</a>
                             </p>
-                            <p>{allSettings.generalSettingsTitle} is a registered company in England.</p>
+                            <p>{globalData.globalOptions.generalSettingsTitle} is a registered company in England.</p>
 
-                                <p>Registered Number: {siteOptions.siteOptions.registrationNumber}</p>
+                                <p>Registered Number: {globalData.siteOptions.registrationNumber}</p>
                             
-                                <p>VAT Number: {siteOptions.siteOptions.vatNumber}</p>
+                                <p>VAT Number: {globalData.siteOptions.vatNumber}</p>
 
-                            <p>&copy; {allSettings.generalSettingsTitle} {new Date().getFullYear()}. All Rights Reserved</p>
+                            <p>&copy; {globalData.globalOptions.generalSettingsTitle} {new Date().getFullYear()}. All Rights Reserved</p>
 
                             <a className="block mx-auto max-w-32 adtrak" href="https://www.adtrak.co.uk/website-referral/" target="_blank" rel="noreferrer noopener">ADTRAK LOGO</a>
                         </div>
