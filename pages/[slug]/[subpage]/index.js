@@ -1,9 +1,9 @@
-import { getGlobalOptions, getPrimaryNavigation, getPageData, getAllPagesBySlug } from '@/lib/api'
+import { getPageData, getAllPagesBySlug } from '@/lib/api'
 import Seo from '@/components/seo'
-import Layout from '@/components/layout'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
-import Container from '@/components/container'
+import Layout from '@/components/Layout'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import Container from '@/components/Container'
 
 import { motion } from 'framer-motion'
 
@@ -22,7 +22,7 @@ export default function Page({ globalOptions, primaryMenu, page, params }) {
 
       Child dynamic page
 
-        <Header navItems={primaryMenu} logoUrl={globalOptions.siteOptions.siteOptions.siteLogo.mediaItemUrl} />
+        <Header />
 
         <motion.div 
           key="homepage"
@@ -44,7 +44,7 @@ export default function Page({ globalOptions, primaryMenu, page, params }) {
 
               <aside className="bg-gray-100 lg:w-1/3">
 
-                
+                aside
                 
               </aside>
 
@@ -54,7 +54,7 @@ export default function Page({ globalOptions, primaryMenu, page, params }) {
 
         </motion.div>
 
-        <Footer globalOptions={globalOptions} navItems={primaryMenu} />
+        <Footer />
 
     </Layout>
 
@@ -62,8 +62,6 @@ export default function Page({ globalOptions, primaryMenu, page, params }) {
 }
 
 export async function getStaticProps({ params }) {
-  const globalOptions = await getGlobalOptions()
-  const primaryMenu = await getPrimaryNavigation()
   const page = await getPageData(`${params.slug}/${params.subpage}`);
 
   return {

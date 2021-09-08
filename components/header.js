@@ -3,8 +3,8 @@ import { useGlobalContext } from '../pages/_app'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import Container from '@/components/container'
-import MobileTopBar from '@/components/mobileTopBar'
+import Container from '@/components/Container'
+import MobileTopBar from '@/components/MobileTopBar'
 
 
 export default function Header({  }) {

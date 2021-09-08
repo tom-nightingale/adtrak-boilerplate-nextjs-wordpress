@@ -1,9 +1,9 @@
 import Head from 'next/head'
 
-import Layout from '@/components/layout'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
-import Container from '@/components/container'
+import Layout from '@/components/Layout'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import Container from '@/components/Container'
 import FancyLink from '@/components/fancyLink'
 
 import { motion } from 'framer-motion'

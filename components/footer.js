@@ -2,7 +2,8 @@ import { useGlobalContext } from '../pages/_app'
 
 import Link from 'next/link'
 
-import Container from '@/components/container'
+import Container from '@/components/Container'
+import AdtrakLogo from '@/components/AdtrakLogo'
 
 export default function Footer({  }) {
     const globalData = useGlobalContext();
@@ -60,7 +61,8 @@ export default function Footer({  }) {
 
                             <p>&copy; {globalData.globalOptions.generalSettingsTitle} {new Date().getFullYear()}. All Rights Reserved</p>
 
-                            <a className="block mx-auto max-w-32 adtrak" href="https://www.adtrak.co.uk/website-referral/" target="_blank" rel="noreferrer noopener">ADTRAK LOGO</a>
+                            <AdtrakLogo />
+                            
                         </div>
 
                     </div>
