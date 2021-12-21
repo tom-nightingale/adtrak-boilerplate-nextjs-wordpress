@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ['adtrak-boilerplate.vm',],
+    domains: ['adtrak-next.vm'],
   },
 }

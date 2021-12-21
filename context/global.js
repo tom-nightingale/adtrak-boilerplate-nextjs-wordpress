@@ -7,8 +7,7 @@ export function useGlobalContext() {
   return useContext(GlobalContext);
 }
 
-function GlobalProvider({ something, children }) {
-    console.log(something);
+function GlobalProvider({ children }) {
     return(
         <GlobalContext.Provider value={something}>
             {children}

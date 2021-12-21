@@ -2,16 +2,15 @@ import '@/styles/main.css'
 import { AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { createContext, useContext } from 'react'
-import { getGlobalOptions, getPrimaryNavigation } from '@/lib/api'
+import { getGlobalOptions, getAllMenus } from '@/lib/api'
 
 export const GlobalContext = createContext();
-
 export function useGlobalContext() {
   return useContext(GlobalContext);
 }
 
 export default function App({ Component, pageProps, globalData }) {
-    const router = useRouter()
+    const router = useRouter();
     
     return (
         <GlobalContext.Provider value={globalData}>
@@ -23,17 +22,19 @@ export default function App({ Component, pageProps, globalData }) {
 }
 
 App.getInitialProps = async () => {
-    // Get our WordPress data and Site Options
+    // Get our WordPress data, siteOptions and Marketing options
     const globalData = await getGlobalOptions();
 
-    // Get our primary navigation items
-    const primaryNavigation = await getPrimaryNavigation();
+    // Get our primary and secondary navigation objedcts
+    const globalMenus = await getAllMenus();
 
     return {
         globalData: { 
             globalOptions:  globalData.allSettings,
             siteOptions: globalData.siteOptions.siteOptions,
-            primaryNav: primaryNavigation.menuItems,
+            marketing: globalData.marketing.marketing,
+            primaryMenu: globalMenus.primaryMenu.edges[0].node.menuItems.edges,
+            secondaryMenu: globalMenus.secondaryMenu.edges[0].node.menuItems.edges,
         },
     }
 }

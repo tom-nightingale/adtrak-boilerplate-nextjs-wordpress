@@ -11,8 +11,21 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
+
         <Head>
           <link rel="icon" href="/favicon.ico" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-XXXXXXX', {
+              page_path: window.location.pathname,
+            });
+          `,
+            }}
+          />
         </Head>
         
         <body>

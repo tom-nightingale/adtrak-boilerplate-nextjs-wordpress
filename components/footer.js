@@ -19,7 +19,7 @@ export default function Footer({  }) {
                         <div className="w-full mb-8 lg:w-3/12">
                             <Link href="/">
                                 <a aria-label="Go to homepage" className="block lg:inline-block">
-                                    <img className="w-full mx-auto max-w-40" src={globalData.siteOptions.siteLogo.mediaItemUrl} alt="Logo"/>
+                                    <img className="w-full mx-auto max-w-40" src={globalData.siteOptions.siteLogo.mediaItemUrl} alt={`${globalData.globalOptions.generalSettingsTitle} Logo`} />
                                 </a>
                             </Link>
                         </div>
@@ -27,7 +27,7 @@ export default function Footer({  }) {
                         <div className="w-full mb-8 lg:w-3/12">
                             <h6>Explore</h6>
                             <ul>
-                                {globalData.primaryNav.edges.map((item, i) => {
+                                {globalData.primaryMenu.map((item, i) => {
                                     if(!item.node.parentId) {
                                         return(
                                             <li key={i}>

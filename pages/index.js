@@ -1,4 +1,5 @@
 import { getHomepageData } from '@/lib/api'
+
 import Layout from '@/components/Layout'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -8,18 +9,17 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 
-export default function Home({ page }) {  
+export default function Home({ page }) {
   
-  const pageData = page.page;
   const createFullPostMarkup = () => {
-      return { __html: `<h1>${pageData.title}</h1>${ pageData.content }` }
+      return { __html: `<h1>${page.title}</h1>${ page.content }` }
   }
   
   return (
+    <>
+    <Seo seo={page.seo} />    
     
-    <Layout>
-        
-        <Seo seo={pageData.seo} />
+    <Layout> 
 
         <Header />
 
@@ -31,10 +31,10 @@ export default function Home({ page }) {
           transition={{duration: .25}}
         >
 
-          <div className="relative w-full overflow-hidden min-h-75">
+          <div className="relative w-full overflow-hidden min-h-50">
             <Image 
-              src={pageData.featuredImage.node.sourceUrl}
-              alt={pageData.title}
+              src={page.featuredImage.node.sourceUrl}
+              alt={page.title}
               layout="fill"
               objectFit="cover"
               className=""
@@ -59,17 +59,20 @@ export default function Home({ page }) {
 
           </Container>
 
+          <Footer />
+
         </motion.div>
 
-        <Footer />
-
     </Layout>
+
+    </>
 
   )
 }
 
 export async function getStaticProps({ preview = false }) {
-  const page = await getHomepageData(preview)
+  
+  const page = await getHomepageData(preview);
 
   return {
     props: {

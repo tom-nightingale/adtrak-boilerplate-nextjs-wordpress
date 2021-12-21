@@ -17,14 +17,57 @@ export default function Header({  }) {
 
             <header className="pt-8 bg-white border-t-4 border-secondary lg:border-none lg:pt-0">
 
+                <div className="hidden bg-primary top-bar lg:block">
+
+                    <Container>
+
+                        <nav id="menu-secondary" className="container hidden menu lg:block" aria-labelledby="secondary-navigation">
+                            <span className="sr-only" id="secondary-navigation">Secondary Navigation</span>
+                            <ul className="flex flex-wrap justify-center w-full menu-secondary menu-secondary-js">
+                                {globalData.secondaryMenu.map((item, key) => {
+                                    if(!item.node.parentId) {
+                                        return(
+                                            <li key={key} className="">
+                                                <Link href={`${item.node.path}`}>
+                                                    <a className="relative block p-4 text-gray-500 hover:text-black focus:text-black">
+                                                        {item.node.label}
+                                                    </a>
+                                                </Link>
+                                                {item.node.childItems.edges && 
+                                                    <ul className="sub-menu">
+                                                        {item.node.childItems.edges.map((child, childKey) => {
+                                                            return (
+                                                            <li key={childKey} className="">
+                                                                <Link href={`${child.node.path}`}>
+                                                                    <a className="block p-4 text-gray-500 hover:text-black focus:text-black">
+                                                                        {child.node.label}
+                                                                    </a>
+                                                                </Link>
+                                                            </li>
+                                                            )
+                                                        })}                                                        
+                                                    </ul>
+                                                }
+                                            </li>
+                                        )
+                                    }
+                                })}
+                            </ul>
+                        </nav>
+
+                    </Container>
+                    
+                </div>
+
+
                 <Container>
                     <div className="flex flex-wrap items-center">
                         <Link href="/">
                             <a className="block py-8">
-                                <img src={globalData.siteOptions.siteLogo.mediaItemUrl} alt="Company Name" className="w-full max-w-40" />
+                                <img src={globalData.siteOptions.siteLogo.mediaItemUrl} alt={`${globalData.globalOptions.generalSettingsTitle} Logo`} className="w-full max-w-40" />
                             </a>
                         </Link>
-                        <a className="block ml-auto text-xl text-primary hover:text-secondary focus:text-secondary" href="#"><span className="hidden lg:inline">Call <span className="font-bold">Location</span> On </span><span className="font-bold">0800 000 0000</span></a>
+                        <a className="block ml-auto text-xl text-primary hover:text-secondary focus:text-secondary" href="#"><span className="hidden lg:inline">{globalData.siteOptions.prefixPhoneNumber} <span className="font-bold">{globalData.siteOptions.defaultLocation}</span> On </span><span className="font-bold">{globalData.siteOptions.defaultPhoneNumber}</span></a>
                     </div>
                 </Container>
 
@@ -32,7 +75,7 @@ export default function Header({  }) {
                     <Container>
                         <nav id="menu-primary" role="navigation" className="xl:ml-auto xl:pl-8 md:w-full xl:flex-1 menu-primary" aria-label="Site Main Navigation">
                             <ul className="flex flex-wrap items-center xl:justify-end menu-primary-js">
-                                {globalData.primaryNav.edges.map((item, key) => {
+                                {globalData.primaryMenu.map((item, key) => {
                                     if(!item.node.parentId) {
                                         return(
                                             <li className="" key={key}>    

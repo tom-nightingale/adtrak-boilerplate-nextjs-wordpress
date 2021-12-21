@@ -1,7 +1,7 @@
 import { NextSeo } from "next-seo"
 
 export default function SEO({ seo }) {
-    return(
+    return (
         <NextSeo
             title={seo.title}
             description={seo.metaDesc}
