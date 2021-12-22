@@ -3,8 +3,8 @@ import { useGlobalContext } from '../pages/_app'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import Container from '@/components/Container'
-import MobileTopBar from '@/components/MobileTopBar'
+import Container from '@/components/container'
+import MobileTopBar from '@/components/mobileTopBar'
 
 
 export default function Header({  }) {
@@ -13,7 +13,7 @@ export default function Header({  }) {
 
     return (
         <>
-            <MobileTopBar />
+            <MobileTopBar globalData={globalData} />
 
             <header className="pt-8 bg-white border-t-4 border-secondary lg:border-none lg:pt-0">
 
@@ -23,7 +23,7 @@ export default function Header({  }) {
 
                         <nav id="menu-secondary" className="container hidden menu lg:block" aria-labelledby="secondary-navigation">
                             <span className="sr-only" id="secondary-navigation">Secondary Navigation</span>
-                            <ul className="flex flex-wrap justify-center w-full menu-secondary menu-secondary-js">
+                            <ul className="flex flex-wrap justify-center w-full menu-secondary">
                                 {globalData.secondaryMenu.map((item, key) => {
                                     if(!item.node.parentId) {
                                         return(
@@ -33,7 +33,7 @@ export default function Header({  }) {
                                                         {item.node.label}
                                                     </a>
                                                 </Link>
-                                                {item.node.childItems.edges && 
+                                                {item.node.childItems.edges.length > 0 && 
                                                     <ul className="sub-menu">
                                                         {item.node.childItems.edges.map((child, childKey) => {
                                                             return (
@@ -74,7 +74,7 @@ export default function Header({  }) {
                 <div className="hidden border-t border-gray-300 lg:block">
                     <Container>
                         <nav id="menu-primary" role="navigation" className="xl:ml-auto xl:pl-8 md:w-full xl:flex-1 menu-primary" aria-label="Site Main Navigation">
-                            <ul className="flex flex-wrap items-center xl:justify-end menu-primary-js">
+                            <ul className="flex flex-wrap items-center xl:justify-end">
                                 {globalData.primaryMenu.map((item, key) => {
                                     if(!item.node.parentId) {
                                         return(
@@ -84,7 +84,7 @@ export default function Header({  }) {
                                                         {item.node.label}
                                                     </a>
                                                 </Link>
-                                                {item.node.childItems.edges && 
+                                                {item.node.childItems.edges.length > 0 && 
                                                     <ul className="sub-menu">
                                                         {item.node.childItems.edges.map((child, childKey) => {
                                                             return(

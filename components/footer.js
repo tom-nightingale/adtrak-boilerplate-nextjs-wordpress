@@ -2,8 +2,8 @@ import { useGlobalContext } from '../pages/_app'
 
 import Link from 'next/link'
 
-import Container from '@/components/Container'
-import AdtrakLogo from '@/components/AdtrakLogo'
+import Container from '@/components/container'
+import AdtrakLogo from '@/components/adtrakLogo'
 
 export default function Footer({  }) {
     const globalData = useGlobalContext();

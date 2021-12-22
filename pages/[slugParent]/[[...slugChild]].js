@@ -1,10 +1,10 @@
 import { getPageByUri, getAllPagesBySlug } from '@/lib/api'
 
 import Seo from '@/components/seo'
-import Layout from '@/components/Layout'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import Container from '@/components/Container'
+import Layout from '@/components/layout'
+import Header from '@/components/header'
+import Footer from '@/components/footer'
+import Container from '@/components/container'
 
 import { motion } from 'framer-motion'
 

@@ -14,7 +14,7 @@ html {
 
 html,
 body {
-  @apply font-sans antialiased leading-relaxed text-black
+  @apply font-sans antialiased leading-relaxed text-black overflow-x-hidden
 }
 
 * {

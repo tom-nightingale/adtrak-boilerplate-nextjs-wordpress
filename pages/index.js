@@ -1,11 +1,10 @@
 import { getHomepageData } from '@/lib/api'
-
-import Layout from '@/components/Layout'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import Container from '@/components/Container'
+import Layout from '@/components/layout'
 import Seo from '@/components/seo'
-import Image from 'next/image'
+import Header from '@/components/header'
+import Container from '@/components/container'
+import Hero from '@/components/hero'
+import Footer from '@/components/footer'
 import { motion } from 'framer-motion'
 
 
@@ -17,6 +16,7 @@ export default function Home({ page }) {
   
   return (
     <>
+    
     <Seo seo={page.seo} />    
     
     <Layout> 
@@ -31,15 +31,10 @@ export default function Home({ page }) {
           transition={{duration: .25}}
         >
 
-          <div className="relative w-full overflow-hidden min-h-50">
-            <Image 
-              src={page.featuredImage.node.sourceUrl}
-              alt={page.title}
-              layout="fill"
-              objectFit="cover"
-              className=""
-            />
-          </div>            
+          <Hero 
+            image={page.featuredImage.node.sourceUrl}
+            heading={page.title}
+          />         
 
           <Container>
 
