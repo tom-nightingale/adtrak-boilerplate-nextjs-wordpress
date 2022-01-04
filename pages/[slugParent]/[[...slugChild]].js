@@ -1,4 +1,4 @@
-import { getPageByUri, getAllPagesBySlug } from '@/lib/api'
+import { getPageByUri, getAllPages } from '@/lib/api'
 
 import Seo from '@/components/seo'
 import Layout from '@/components/layout'
@@ -59,7 +59,7 @@ export default function Page({ page }) {
   )
 }
 
-export async function getStaticProps({params}) {
+export async function getStaticProps({ params = {} } = {}) {
 
   const { slugParent, slugChild } = params;
 
@@ -83,24 +83,29 @@ export async function getStaticProps({params}) {
 }
 
 export async function getStaticPaths() {
+  const { pages } = await getAllPages();
 
-  const allPages = await getAllPagesBySlug();
-  
-  const paths = allPages
-    .filter(({ uri }) => typeof uri === 'string')
-    .map(({ uri }) => {
+  // Take all the pages and create path params. The slugParent will always be
+  // the top level parent page, where the slugChild will be an array of the
+  // remaining segments to make up the path or URI
 
-      const segments = uri.split('/').filter((seg) => seg !== '/');
-      return {
-        params: {
-          slugParent: segments.shift(),
-          slugChild: segments,
-        },
-      };
+  const paths = pages
+  .filter(({ uri }) => typeof uri === 'string')
+  .map(({ uri }) => {
+    const segments = uri.split('/').filter((seg) => seg !== '');
+
+    return {
+      params: {
+        slugParent: segments.shift(),
+        slugChild: segments,
+      },
+    };
   });
+
+  console.log(paths);
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }

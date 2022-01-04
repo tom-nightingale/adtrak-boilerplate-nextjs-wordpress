@@ -72,7 +72,7 @@ export async function getStaticProps({ preview = false }) {
   return {
     props: {
       page,
-      preview 
+      preview
     },
   }
 }
