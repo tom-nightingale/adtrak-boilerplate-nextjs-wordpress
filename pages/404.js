@@ -1,8 +1,8 @@
 import Head from 'next/head'
 
-import Layout from '@/components/layout'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
+import Layout from '@/components/core/layout'
+import Header from '@/components/core/header'
+import Footer from '@/components/core/footer'
 import Container from '@/components/container'
 import FancyLink from '@/components/fancyLink'
 

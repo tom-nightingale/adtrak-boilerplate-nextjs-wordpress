@@ -1,8 +1,7 @@
-import { useGlobalContext } from '../pages/_app'
-
+import { useGlobalContext } from '@/pages/_app'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-
+import { FiChevronDown } from "react-icons/fi";
 import Container from '@/components/container'
 import MobileTopBar from '@/components/mobileTopBar'
 
@@ -31,6 +30,11 @@ export default function Header({  }) {
                                                 <Link href={`${item.node.path}`}>
                                                     <a className="relative block p-4 text-gray-500 hover:text-black focus:text-black">
                                                         {item.node.label}
+                                                        {item.node.childItems.edges.length > 0 && 
+                                                            <span className="">
+                                                                <FiChevronDown />
+                                                            </span>
+                                                        }
                                                     </a>
                                                 </Link>
                                                 {item.node.childItems.edges.length > 0 && 
@@ -82,6 +86,11 @@ export default function Header({  }) {
                                                 <Link href={`${item.node.path}`}>
                                                     <a className={`block px-5 py-5 text-sm lg:text-base xl:text-lg hover:text-secondary focus:text-secondary text-black ${ item.node.path !== '/' && `${router.asPath}/`.includes(`${item.node.path}`) ? 'bg-green-500' : ''} ${item.node.path == `${router.asPath}` ? 'bg-green-500' : '' }`}>
                                                         {item.node.label}
+                                                        {item.node.childItems.edges.length > 0 && 
+                                                            <span className="absolute text-sm -translate-x-1/2 bottom-2 left-1/2">
+                                                                <FiChevronDown />
+                                                            </span>
+                                                        }
                                                     </a>
                                                 </Link>
                                                 {item.node.childItems.edges.length > 0 && 

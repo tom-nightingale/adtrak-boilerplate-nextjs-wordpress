@@ -1,12 +1,13 @@
 import { getAllPosts, getHomepageData } from '@/lib/api'
-import Layout from '@/components/layout'
-import Seo from '@/components/seo'
-import Header from '@/components/header'
+import Layout from '@/components/core/layout'
+import Seo from '@/components/core/seo'
+import Header from '@/components/core/header'
 import Container from '@/components/container'
 import Hero from '@/components/hero'
-import Footer from '@/components/footer'
+import Footer from '@/components/core/footer'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { CorporateContactJsonLd } from 'next-seo'
 
 
 export default function Page({ page, posts }) {
@@ -41,14 +42,16 @@ export default function Page({ page, posts }) {
               <main className="lg:w-2/3">
 
                 {posts.posts.length > 0 && 
-                    <div>
+                    <div className="flex flex-wrap">
                         {posts.posts.map((post, index) => {
                             return (
-                                <Link href={post.uri} key={index}>
-                                <a>
-                                    {post.title}
-                                </a>
+                              <div className="p-4">
+                                <Link href={post.uri} key={index} >
+                                  <a className="p-4 rounded-sm shadow-lg">
+                                      {post.title}
+                                  </a>
                                 </Link>
+                              </div>
                             )
                         })}                    
                     </div>
@@ -78,8 +81,9 @@ export default function Page({ page, posts }) {
 export async function getStaticProps({ preview = false }) {
 
   const posts = await getAllPosts();
-
   const page = await getHomepageData(preview);
+
+  console.log(posts.posts);
 
   return {
     props: {
@@ -87,5 +91,6 @@ export async function getStaticProps({ preview = false }) {
       preview,
       posts
     },
+    revalidate: 10, // In seconds
   }
 }

@@ -1,4 +1,4 @@
-import { getHomepageData } from '@/lib/api'
+import { getPostByUri, getAllPosts } from '@/lib/api'
 import Layout from '@/components/core/layout'
 import Seo from '@/components/core/seo'
 import Header from '@/components/core/header'
@@ -6,19 +6,20 @@ import Container from '@/components/container'
 import Hero from '@/components/hero'
 import Footer from '@/components/core/footer'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 
-export default function Home({ page }) {
-  
+export default function Page({ post }) {
+
   const createFullPostMarkup = () => {
-      return { __html: `<h1>${page.title}</h1>${ page.content }` }
+      return { __html: `<h1>${post.title}</h1>${ post.content }` }
   }
-  
+
   return (
     <>
-    
-    <Seo seo={page.seo} />    
-    
+
+    <Seo seo={post.seo} />    
+
     <Layout> 
 
         <Header />
@@ -30,10 +31,9 @@ export default function Home({ page }) {
           exit={{ opacity: 0 }}
           transition={{duration: .25}}
         >
-
+          
           <Hero 
-            image={page.featuredImage.node.sourceUrl}
-            heading={page.title}
+            image={post.featuredImage ? post.featuredImage.node.sourceUrl : null }
           />         
 
           <Container>
@@ -47,7 +47,7 @@ export default function Home({ page }) {
               </main>
 
               <aside className="bg-gray-100 lg:w-1/3">
-                
+
               </aside>
 
             </div>
@@ -65,14 +65,23 @@ export default function Home({ page }) {
   )
 }
 
-export async function getStaticProps({ preview = false }) {
-  
-  const page = await getHomepageData(preview);
+
+export async function getStaticProps({ params = {} } = {}) {
+
+  const post = await getPostByUri(`/news/${params.slug}`);
 
   return {
     props: {
-      page,
-      preview
+      post
     },
   }
+}
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+
+  return {
+    paths: posts.posts.map((post) => post.uri),
+    fallback: false,
+  };
 }
