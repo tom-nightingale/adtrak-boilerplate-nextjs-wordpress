@@ -11,7 +11,6 @@ import { CorporateContactJsonLd } from 'next-seo'
 
 
 export default function Page({ page, posts }) {
-    console.log(posts);
 
   return (
     <>
@@ -82,8 +81,6 @@ export async function getStaticProps({ preview = false }) {
 
   const posts = await getAllPosts();
   const page = await getHomepageData(preview);
-
-  console.log(posts.posts);
 
   return {
     props: {

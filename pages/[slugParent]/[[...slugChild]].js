@@ -18,7 +18,7 @@ export default function Page({ page }) {
 
     <Layout>
 
-      <Seo seo={page.seo} />
+        <Seo page={page} />
       
         <Header />
 

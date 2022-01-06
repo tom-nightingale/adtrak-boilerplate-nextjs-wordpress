@@ -7,8 +7,7 @@ import Hero from '@/components/hero'
 import Footer from '@/components/core/footer'
 import { motion } from 'framer-motion'
 
-
-export default function Home({ page }) {
+export default function Home({ page }) {  
   
   const createFullPostMarkup = () => {
       return { __html: `<h1>${page.title}</h1>${ page.content }` }
@@ -17,7 +16,7 @@ export default function Home({ page }) {
   return (
     <>
     
-    <Seo seo={page.seo} />    
+    <Seo page={page} />
     
     <Layout> 
 
