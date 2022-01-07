@@ -19,7 +19,8 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-icons": "^4.3.1",
-    "sass": "^1.38.1"
+    "sass": "^1.38.1",
+    "store": "^2.0.12"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.4",

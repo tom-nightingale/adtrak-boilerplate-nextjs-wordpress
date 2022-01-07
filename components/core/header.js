@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { FiChevronDown } from "react-icons/fi";
 import Container from '@/components/container'
 import MobileTopBar from '@/components/mobileTopBar'
+import PhoneNumber from '@/components/phoneNumber'
 
 
 export default function Header({  }) {
@@ -71,7 +72,7 @@ export default function Header({  }) {
                                 <img src={globalData.siteOptions.siteLogo.mediaItemUrl} alt={`${globalData.globalOptions.generalSettingsTitle} Logo`} className="w-full max-w-40" />
                             </a>
                         </Link>
-                        <a className="block ml-auto text-xl text-primary hover:text-secondary focus:text-secondary" href="#"><span className="hidden lg:inline">{globalData.siteOptions.prefixPhoneNumber} <span className="font-bold">{globalData.siteOptions.defaultLocation}</span> On </span><span className="font-bold">{globalData.siteOptions.defaultPhoneNumber}</span></a>
+                        <PhoneNumber />
                     </div>
                 </Container>
 

@@ -1,26 +1,42 @@
 {
     "locations": {
         "uk": {
-            "locationID": "",
+            "locationID": [],
             "locationName": "UK",
             "calltag": "Call today on",
             "areCode": "",
             "seoNumber": "0800 000 0000",
             "ppcNumber": "0115 959 8900"
         },
-        "nottingham": {
-            "locationID": "",
-            "locationName": "Nottingham",
+        "abbotsLangley": {
+            "locationID": ["9046036"],
+            "locationName": "Abbots Langley",
             "calltag": "Call today on",
-            "areCode": "0115",
+            "areCode": "01923",
             "seoNumber": "0800 000 0000",
             "ppcNumber": "0115 000 0000"
         },
-        "leicester": {
-            "locationID": "",
-            "locationName": "Leicester",
+        "Aberaeron": {
+            "locationID": ["9045407"],
+            "locationName": "Aberaeron",
             "calltag": "Call today on",
-            "areCode": "0116",
+            "areCode": "01545",
+            "seoNumber": "0800 000 0000",
+            "ppcNumber": "0116 000 0000"
+        },
+        "Aberdare": {
+            "locationID": ["9045381"],
+            "locationName": "Aberdare",
+            "calltag": "Call today on",
+            "areCode": "01685",
+            "seoNumber": "0800 000 0000",
+            "ppcNumber": "0116 000 0000"
+        },
+        "Aberdeen": {
+            "locationID": ["1007293","9046831","9046832","9046833","9046834","9046835","9046836","9046837"],
+            "locationName": "Aberdeen",
+            "calltag": "Call today on",
+            "areCode": "01224",
             "seoNumber": "0800 000 0000",
             "ppcNumber": "0116 000 0000"
         }
