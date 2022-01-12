@@ -18,7 +18,7 @@ export default function Page({ post }) {
   return (
     <>
 
-    <Seo seo={post.seo} />    
+    <Seo page={post} />    
 
     <Layout> 
 
