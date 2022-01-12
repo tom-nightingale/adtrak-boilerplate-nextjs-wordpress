@@ -1,4 +1,5 @@
-import Head from "next/head"
+import Head from 'next/head'
+import Script from 'next/script'
 import { useGlobalContext } from '@/pages/_app'
 
 export default function SEO({ page }) {
@@ -22,10 +23,19 @@ export default function SEO({ page }) {
             {page.seo.opengraphImage &&
                 <meta name="twitter:card" content={page.seo.opengraphImage.sourceUrl} />
             }
-            <script>{globalData.marketing.schema}</script>
-            <script>{globalData.marketing.metaTags}</script>
-            <script>{globalData.marketing.googleAnalytics}</script>
-            {/* <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"http://adtrak-next.vm/#website","url":"http://adtrak-next.vm/","name":"Adtrak Next","description":"Adtrak Next Boilerplate","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"http://adtrak-next.vm/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-GB"},{"@type":"CollectionPage","@id":"http://adtrak-next.vm/#webpage","url":"http://adtrak-next.vm/","name":"Adtrak Next - Adtrak Next Boilerplate","isPartOf":{"@id":"http://adtrak-next.vm/#website"},"description":"Adtrak Next Boilerplate","breadcrumb":{"@id":"http://adtrak-next.vm/#breadcrumb"},"inLanguage":"en-GB","potentialAction":[{"@type":"ReadAction","target":["http://adtrak-next.vm/"]}]},{"@type":"BreadcrumbList","@id":"http://adtrak-next.vm/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]}]}</script> */}
+            <Script
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                    __html: globalData.marketing.schema,
+                }}
+            />
+            <Script
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                    __html: globalData.marketing.googleAnalytics,
+                }}
+            />
+            {globalData.marketing.metaTags}
             <link rel='dns-prefetch' href='//s.w.org' />
         </Head>
     )
