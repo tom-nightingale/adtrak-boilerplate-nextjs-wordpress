@@ -6,7 +6,6 @@ var store = require('store')
 export default function PhoneNumber({ }) {
     const globalData = useGlobalContext();
     const router = useRouter();
-    
 
     const physicalLoc = router.query.physical_loc ? router.query.physical_loc : null;
     const insterestedLoc = router.query.interested_loc ? router.query.interested_loc : null;
@@ -16,26 +15,27 @@ export default function PhoneNumber({ }) {
     let locationNumber;
 
     // Get today's date
-    let date = new Date();
-    date.setDate(date.getDate());
+    let today = new Date().getTime();
+    today = Number(today);
 
     // Set an expiry date of 30 days for the 
-    let expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + 30); // 30 days
-    
+    let expires = new Date();
+    expires.setTime(expires.getTime() + 30 * 24 * 60 * 60 * 1000); // +30 days
+    let expiryDate = expires.getTime();
 
     // Check if we have existing local storage items
     if(store.get('ald')) { // We have ALD Values stored
         
         // We have values stored, so check if they have expired.
-        // if(date < store.get('ald'.expiry)) {
+        // Check if todays date is less than the expiration date
+        if(today < store.get('ald').expiry) {
             locationName = store.get('ald').location;
             locationNumber = store.get('ald').number;
-        // }
+        }
         // If the date is beyond the expiration we need to clear all the stored values.
-        // else {
-        //     store.clearAll();
-        // }
+        else {
+            store.clearAll();
+        }
     }
     else { // We don't have any values set so we can check if the query string matches.
         // Loop through our ALD locations
@@ -53,6 +53,10 @@ export default function PhoneNumber({ }) {
                     number: ALD.locations[location].ppcNumber,
                     expiry: expiryDate,
                 });
+                
+                // Set the initial values for first load
+                locationName = ALD.locations[location].locationName;
+                locationNumber = ALD.locations[location].ppcNumber;
             }
         });
     }
