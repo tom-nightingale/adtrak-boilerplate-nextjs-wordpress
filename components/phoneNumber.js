@@ -8,7 +8,11 @@ export default function PhoneNumber({ }) {
     const router = useRouter();
 
     const physicalLoc = router.query.physical_loc ? router.query.physical_loc : null;
-    const insterestedLoc = router.query.interested_loc ? router.query.interested_loc : null;
+    const interestedLoc = router.query.interested_loc ? router.query.interested_loc : null;
+    // const gCLID = router.query.GCLID ? router.query.GCLID : null;
+    // const area = router.query.a ? router.query.a : null;
+
+    /* ~ TODO - check if the query parameter matches the stored ALD localstorage - otherwise they might have changed location! ~ */
 
     // Set some default variables that we'll overwrite with ALD values
     let locationName;
@@ -25,6 +29,8 @@ export default function PhoneNumber({ }) {
 
     // Check if we have existing local storage items
     if(store.get('ald')) { // We have ALD Values stored
+
+        console.log(store.get('ald'));
         
         // We have values stored, so check if they have expired.
         // Check if todays date is less than the expiration date
@@ -43,20 +49,30 @@ export default function PhoneNumber({ }) {
             // Get all of the location IDs from the locations
             let locationID = ALD.locations[location].locationID;
             
-            // Check to see if our physicalLoc matches any of the location IDs
-            if(locationID.indexOf(physicalLoc) != -1) {
-                console.log(ALD.locations[location].locationName + " is matched");
+            // Check to see if our physicalLoc OR interestedLoc matches any of the location IDs
+            if(locationID.indexOf(physicalLoc) != -1 || locationID.indexOf(interestedLoc) != -1) {
+
+                /* Number Formatting */                
+                const areaFormat = ALD.locations[location].areaFormat; // Get the number format from the JSON file
+                const aldPpcNumber = ALD.locations[location].ppcNumber.replace(/ /g, ""); // remove any spaces from the string
+                const formattedPpcNumber = ""; // Placeholder variable that we'll add our formatted number into
+                let offset = 0; // Set a default offset as 0 - we'll change this later as we loop through our array.
+
+                areaFormat.forEach(function(item) {
+                    formattedPpcNumber += aldPpcNumber.substr(offset, item) + " "; // Add our chunk of numbers to the formattedPpcNumber string
+                    offset = offset + item; // replace the offset with the value of the current item so we can start our string split at the right place.
+                });
                 
                 //Set local storage items so the location and number save on browser close.
                 store.set('ald', {
                     location: ALD.locations[location].locationName,
-                    number: ALD.locations[location].ppcNumber,
+                    number: formattedPpcNumber,
                     expiry: expiryDate,
                 });
                 
                 // Set the initial values for first load
                 locationName = ALD.locations[location].locationName;
-                locationNumber = ALD.locations[location].ppcNumber;
+                locationNumber = formattedPpcNumber;
             }
         });
     }

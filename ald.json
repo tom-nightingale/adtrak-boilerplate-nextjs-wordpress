@@ -4,41 +4,40 @@
             "locationID": [],
             "locationName": "UK",
             "calltag": "Call today on",
-            "areCode": "",
-            "seoNumber": "0800 000 0000",
-            "ppcNumber": "0115 959 8900"
+            "areaFormat": "",
+            "seoNumber": "0800 0000000",
+            "ppcNumber": "0115 9598900"
         },
         "abbotsLangley": {
             "locationID": ["9046036"],
             "locationName": "Abbots Langley",
             "calltag": "Call today on",
-            "areCode": "01923",
-            "seoNumber": "0800 000 0000",
-            "ppcNumber": "0115 000 0000"
+            "areaFormat": [4, 3, 4],
+            "seoNumber": "08000000000",
+            "ppcNumber": "0115 123 4567"
         },
         "Aberaeron": {
             "locationID": ["9045407"],
             "locationName": "Aberaeron",
             "calltag": "Call today on",
-            "areCode": "01545",
-            "seoNumber": "0800 000 0000",
-            "ppcNumber": "0116 000 0000"
+            "areaFormat": [4, 3, 4],
+            "seoNumber": "08000000000",
+            "ppcNumber": "01160000000"
         },
         "Aberdare": {
             "locationID": ["9045381"],
             "locationName": "Aberdare",
             "calltag": "Call today on",
-            "areCode": "01685",
-            "seoNumber": "0800 000 0000",
-            "ppcNumber": "0116 000 0000"
+            "areaFormat": [4, 3, 4],
+            "seoNumber": "08000000000",
+            "ppcNumber": "01160000000"
         },
         "Aberdeen": {
             "locationID": ["1007293","9046831","9046832","9046833","9046834","9046835","9046836","9046837"],
             "locationName": "Aberdeen",
-            "calltag": "Call today on",
-            "areCode": "01224",
-            "seoNumber": "0800 000 0000",
-            "ppcNumber": "0116 000 0000"
+            "areaFormat": [3, 4, 4],
+            "seoNumber": "08000000000",
+            "ppcNumber": "01160000000"
         }
     }
 }
