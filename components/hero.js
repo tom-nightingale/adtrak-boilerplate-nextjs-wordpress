@@ -11,6 +11,7 @@ export default function Hero({ image, heading }) {
                     layout="fill"
                     objectFit="cover"
                     className=""
+                    priority
                 />
             }
         </div>   

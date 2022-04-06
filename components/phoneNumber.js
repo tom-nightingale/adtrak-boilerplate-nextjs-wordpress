@@ -3,7 +3,8 @@ import ALD from '../ald.json';
 import { useRouter } from 'next/router'
 var store = require('store')
 
-export default function PhoneNumber({ }) {
+export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, locationClasses, numberClasses }) {
+
     const globalData = useGlobalContext();
     const router = useRouter();
 
@@ -12,7 +13,7 @@ export default function PhoneNumber({ }) {
     // const gCLID = router.query.GCLID ? router.query.GCLID : null;
     // const area = router.query.a ? router.query.a : null;
 
-    /* ~ TODO - check if the query parameter matches the stored ALD localstorage - otherwise they might have changed location! ~ */
+    /* ~ TODO ~ Check if the query parameter matches the stored ALD localstorage - otherwise they might have changed location! ~ */
 
     // Set some default variables that we'll overwrite with ALD values
     let locationName;
@@ -78,16 +79,22 @@ export default function PhoneNumber({ }) {
     }
 
     return(
-        <a className="block ml-auto text-xl text-primary hover:text-secondary focus:text-secondary" href={`tel:${locationNumber ? locationNumber : globalData.siteOptions.defaultPhoneNumber}`}>
-            {!locationName &&
-                <span className="hidden lg:inline">{globalData.siteOptions.prefixPhoneNumber}</span>
+        <div className="ml-auto text-xl text-primary">
+            
+            {(!locationName && showPrefix) &&
+                <span className={`${prefixClasses ? prefixClasses : ''}`}>{globalData.siteOptions.prefixPhoneNumber}</span>
             }
-            <span className="inline-block mr-2 font-bold">
-                {locationName ? locationName : globalData.siteOptions.defaultLocation}
-            </span> 
-            <span className="font-bold">
+
+            {showLocation &&
+                <span className={`${locationClasses ? locationClasses : ''}`}>
+                    {locationName ? locationName : globalData.siteOptions.defaultLocation}
+                </span>
+            }
+
+            <a className={`${numberClasses ? numberClasses : ''}`} href={`tel:${locationNumber ? locationNumber : globalData.siteOptions.defaultPhoneNumber}`}>
                 {locationNumber ? locationNumber : globalData.siteOptions.defaultPhoneNumber}
-            </span>
-        </a>
+            </a>
+            
+        </div>
     )
 }
