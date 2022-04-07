@@ -11,7 +11,7 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     const physicalLoc = router.query.physical_loc ? router.query.physical_loc : null;
     const interestLoc = router.query.interest_loc ? router.query.interest_loc : null;
     // const gCLID = router.query.GCLID ? router.query.GCLID : null;
-    // const area = router.query.a ? router.query.a : null;
+    const campaignQuery = router.query.campaign ? router.query.campaign : null;
 
     // Set some default variables that we'll overwrite with ALD values
     let locationName;
@@ -64,9 +64,47 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
         });
     }
 
+    function matchCampaign() {
+        // Loop through our ALD locations
+        Object.keys(ALD.campaigns).forEach((campaign) => {
+            // Get all of the location IDs from the locations. Will return an array of IDs
+            let campaignID = ALD.campaigns[campaign].campaignID;
+            
+            // Check to see if our physicalLoc OR interestedLoc matches any of the location IDs
+            if(campaignID.indexOf(campaignQuery) != -1) {
+
+                /* Number Formatting */                
+                const areaFormat = ALD.campaigns[campaign].areaFormat; // Get the number format from the JSON file
+                const aldPpcNumber = ALD.campaigns[campaign].ppcNumber.replace(/ /g, ""); // remove any spaces from the string
+                const formattedPpcNumber = ""; // Placeholder variable that we'll add our formatted number into
+                let offset = 0; // Set a default offset as 0 - we'll change this later as we loop through our array.
+
+                areaFormat.forEach(function(item) {
+                    formattedPpcNumber += aldPpcNumber.substr(offset, item) + " "; // Add our chunk of numbers to the formattedPpcNumber string
+                    offset = offset + item; // replace the offset with the value of the current item so we can start our string split at the right place.
+                });
+                
+                //Set local storage items so the location and number save on browser close.
+                store.set('ald', {
+                    location: ALD.campaigns[campaign].locationName,
+                    number: formattedPpcNumber,
+                    expiry: expiryDate,
+                });
+                
+                // Set the initial values for first load
+                locationName = ALD.campaigns[campaign].locationName;
+                locationNumber = formattedPpcNumber;
+            }
+        });
+    }
+
     /* Check if we have a new query param and update the local storage */
     if(physicalLoc || interestLoc) {
         matchALD();
+    }
+
+    if(campaignQuery) {
+        matchCampaign();
     }
 
     /* Check if we have existing local storage items
@@ -84,7 +122,12 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
         }
     }
     else { // We don't have any values set so we can check if the query string matches.
-        matchALD();
+        if(physicalLoc || interestLoc) {
+            matchALD();
+        }
+        else if(campaignQuery) {
+            matchCampaign();
+        }
     }
 
     return ( // Our return statement to output our prefix, location and phone number

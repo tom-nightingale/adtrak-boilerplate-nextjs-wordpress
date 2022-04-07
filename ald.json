@@ -35,5 +35,14 @@
             "seoNumber": "",
             "ppcNumber": "08081752205"
         }        
+    },
+    "campaigns": {
+        "National": {
+            "campaignID": ["campaign"],
+            "locationName": "Campaign",
+            "areaFormat": [4, 3, 4],
+            "seoNumber": "0800 CAMPAIGN",
+            "ppcNumber": "0800 CAMPAIGN"
+        }
     }
 }
