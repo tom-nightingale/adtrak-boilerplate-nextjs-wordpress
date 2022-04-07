@@ -17,7 +17,6 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     let locationName;
     let locationNumber;
 
-
     /* Setting an expiration date */
     // Get today's date
     let today = new Date().getTime();
@@ -88,10 +87,10 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     }
     else { // We don't have any values set so we can check if the query string matches.
         if(physicalLoc || interestLoc) {
-            matchALD();
+            matchPPC("locations");
         }
         else if(campaignQuery) {
-            matchCampaign();
+            matchPPC("campaigns");
         }
     }
 
