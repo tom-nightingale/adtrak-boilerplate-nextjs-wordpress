@@ -28,26 +28,10 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     expires.setTime(expires.getTime() + 30 * 24 * 60 * 60 * 1000); // +30 days
     let expiryDate = expires.getTime();
 
-    // Check if we have existing local storage items
-    if(store.get('ald')) { // We have ALD Values stored
-
-        console.log(store.get('ald'));
-        
-        // We have values stored, so check if they have expired.
-        // Check if todays date is less than the expiration date
-        if(today < store.get('ald').expiry) {
-            locationName = store.get('ald').location;
-            locationNumber = store.get('ald').number;
-        }
-        // If the date is beyond the expiration we need to clear all the stored values.
-        else {
-            store.clearAll();
-        }
-    }
-    else { // We don't have any values set so we can check if the query string matches.
+    function matchALD() {
         // Loop through our ALD locations
         Object.keys(ALD.locations).forEach((location) => {
-            // Get all of the location IDs from the locations
+            // Get all of the location IDs from the locations. Will return an array of IDs
             let locationID = ALD.locations[location].locationID;
             
             // Check to see if our physicalLoc OR interestedLoc matches any of the location IDs
@@ -78,7 +62,30 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
         });
     }
 
-    return(
+    
+    if(physicalLoc || interestedLoc) {
+        console.log('we have a new location so we need to update the ALD values');
+        matchALD();
+    }
+
+    // Check if we have existing local storage items - no query string passes to the URL
+    if(store.get('ald')) {        
+        // We have values stored, so check if they have expired.
+        // Check if todays date is less than the expiration date
+        if(today < store.get('ald').expiry) {
+            locationName = store.get('ald').location;
+            locationNumber = store.get('ald').number;
+        }
+        // If the date is beyond the expiration we need to clear all the stored values.
+        else {
+            store.clearAll();
+        }
+    }
+    else { // We don't have any values set so we can check if the query string matches.
+        matchALD();
+    }
+
+    return ( // Our return statement to output our prefix, location and phone number
         <div className="ml-auto text-xl text-primary">
             
             {(!locationName && showPrefix) &&
