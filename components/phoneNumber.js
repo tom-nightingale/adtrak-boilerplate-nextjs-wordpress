@@ -13,12 +13,12 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     // const gCLID = router.query.GCLID ? router.query.GCLID : null;
     // const area = router.query.a ? router.query.a : null;
 
-    /* ~ TODO ~ Check if the query parameter matches the stored ALD localstorage - otherwise they might have changed location! ~ */
-
     // Set some default variables that we'll overwrite with ALD values
     let locationName;
     let locationNumber;
 
+
+    /* Setting an expiration date */
     // Get today's date
     let today = new Date().getTime();
     today = Number(today);
@@ -28,6 +28,8 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     expires.setTime(expires.getTime() + 30 * 24 * 60 * 60 * 1000); // +30 days
     let expiryDate = expires.getTime();
 
+
+    /* Matching function to match the query param to the ID of a location in ald.json */
     function matchALD() {
         // Loop through our ALD locations
         Object.keys(ALD.locations).forEach((location) => {
@@ -62,13 +64,13 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
         });
     }
 
-    
+    /* Check if we have a new query param and update the local storage */
     if(physicalLoc || interestedLoc) {
-        console.log('we have a new location so we need to update the ALD values');
         matchALD();
     }
 
-    // Check if we have existing local storage items - no query string passes to the URL
+    /* Check if we have existing local storage items
+       No query string passed to the URL so we use the stored values as long as they are not expired */
     if(store.get('ald')) {        
         // We have values stored, so check if they have expired.
         // Check if todays date is less than the expiration date
