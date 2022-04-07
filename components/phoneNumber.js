@@ -9,7 +9,7 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     const router = useRouter();
 
     const physicalLoc = router.query.physical_loc ? router.query.physical_loc : null;
-    const interestedLoc = router.query.interested_loc ? router.query.interested_loc : null;
+    const interestLoc = router.query.interest_loc ? router.query.interest_loc : null;
     // const gCLID = router.query.GCLID ? router.query.GCLID : null;
     // const area = router.query.a ? router.query.a : null;
 
@@ -37,7 +37,7 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
             let locationID = ALD.locations[location].locationID;
             
             // Check to see if our physicalLoc OR interestedLoc matches any of the location IDs
-            if(locationID.indexOf(physicalLoc) != -1 || locationID.indexOf(interestedLoc) != -1) {
+            if(locationID.indexOf(physicalLoc) != -1 || locationID.indexOf(interestLoc) != -1) {
 
                 /* Number Formatting */                
                 const areaFormat = ALD.locations[location].areaFormat; // Get the number format from the JSON file
@@ -65,7 +65,7 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     }
 
     /* Check if we have a new query param and update the local storage */
-    if(physicalLoc || interestedLoc) {
+    if(physicalLoc || interestLoc) {
         matchALD();
     }
 
