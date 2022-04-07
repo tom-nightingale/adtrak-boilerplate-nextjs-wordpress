@@ -28,71 +28,36 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     expires.setTime(expires.getTime() + 30 * 24 * 60 * 60 * 1000); // +30 days
     let expiryDate = expires.getTime();
 
-
     /* Matching function to match the query param to the ID of a location in ald.json */
-    function matchALD() {
+    function matchPPC(type) {
         // Loop through our ALD locations
-        Object.keys(ALD.locations).forEach((location) => {
+        Object.keys(ALD[type]).forEach((item) => {
             // Get all of the location IDs from the locations. Will return an array of IDs
-            let locationID = ALD.locations[location].locationID;
+            let itemID = ALD[type][item].objectIds;
             
             // Check to see if our physicalLoc OR interestedLoc matches any of the location IDs
-            if(locationID.indexOf(physicalLoc) != -1 || locationID.indexOf(interestLoc) != -1) {
+            if(itemID.indexOf(physicalLoc) != -1 || itemID.indexOf(interestLoc) != -1 || itemID.indexOf(campaignQuery) != -1) {
 
                 /* Number Formatting */                
-                const areaFormat = ALD.locations[location].areaFormat; // Get the number format from the JSON file
-                const aldPpcNumber = ALD.locations[location].ppcNumber.replace(/ /g, ""); // remove any spaces from the string
+                const numberFormat = ALD[type][item].numberFormat; // Get the number format from the JSON file
+                const ppcNumber = ALD[type][item].ppcNumber.replace(/ /g, ""); // remove any spaces from the string
                 const formattedPpcNumber = ""; // Placeholder variable that we'll add our formatted number into
                 let offset = 0; // Set a default offset as 0 - we'll change this later as we loop through our array.
 
-                areaFormat.forEach(function(item) {
-                    formattedPpcNumber += aldPpcNumber.substr(offset, item) + " "; // Add our chunk of numbers to the formattedPpcNumber string
+                numberFormat.forEach(function(item) {
+                    formattedPpcNumber += ppcNumber.substr(offset, item) + " "; // Add our chunk of numbers to the formattedPpcNumber string
                     offset = offset + item; // replace the offset with the value of the current item so we can start our string split at the right place.
                 });
                 
                 //Set local storage items so the location and number save on browser close.
                 store.set('ald', {
-                    location: ALD.locations[location].locationName,
+                    location: ALD[type][item].objectName,
                     number: formattedPpcNumber,
                     expiry: expiryDate,
                 });
                 
                 // Set the initial values for first load
-                locationName = ALD.locations[location].locationName;
-                locationNumber = formattedPpcNumber;
-            }
-        });
-    }
-
-    function matchCampaign() {
-        // Loop through our ALD locations
-        Object.keys(ALD.campaigns).forEach((campaign) => {
-            // Get all of the location IDs from the locations. Will return an array of IDs
-            let campaignID = ALD.campaigns[campaign].campaignID;
-            
-            // Check to see if our physicalLoc OR interestedLoc matches any of the location IDs
-            if(campaignID.indexOf(campaignQuery) != -1) {
-
-                /* Number Formatting */                
-                const areaFormat = ALD.campaigns[campaign].areaFormat; // Get the number format from the JSON file
-                const aldPpcNumber = ALD.campaigns[campaign].ppcNumber.replace(/ /g, ""); // remove any spaces from the string
-                const formattedPpcNumber = ""; // Placeholder variable that we'll add our formatted number into
-                let offset = 0; // Set a default offset as 0 - we'll change this later as we loop through our array.
-
-                areaFormat.forEach(function(item) {
-                    formattedPpcNumber += aldPpcNumber.substr(offset, item) + " "; // Add our chunk of numbers to the formattedPpcNumber string
-                    offset = offset + item; // replace the offset with the value of the current item so we can start our string split at the right place.
-                });
-                
-                //Set local storage items so the location and number save on browser close.
-                store.set('ald', {
-                    location: ALD.campaigns[campaign].locationName,
-                    number: formattedPpcNumber,
-                    expiry: expiryDate,
-                });
-                
-                // Set the initial values for first load
-                locationName = ALD.campaigns[campaign].locationName;
+                locationName = ALD[type][item].objectName;
                 locationNumber = formattedPpcNumber;
             }
         });
@@ -100,11 +65,11 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
 
     /* Check if we have a new query param and update the local storage */
     if(physicalLoc || interestLoc) {
-        matchALD();
+        matchPPC("locations");
     }
 
     if(campaignQuery) {
-        matchCampaign();
+        matchPPC("campaigns");
     }
 
     /* Check if we have existing local storage items
