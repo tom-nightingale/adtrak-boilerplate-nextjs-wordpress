@@ -16,6 +16,7 @@ export function useGlobalContext() {
 
 export default function App({ Component, pageProps, globalData }) {
     const router = useRouter();
+    console.log(router);
 
     // Detect page view changes and log with Google Analytics
     useEffect(() => {
@@ -88,6 +89,7 @@ export default function App({ Component, pageProps, globalData }) {
 }
 
 App.getInitialProps = async () => {
+
     // Get our WordPress data, siteOptions and Marketing options
     const globalData = await getGlobalOptions();
 

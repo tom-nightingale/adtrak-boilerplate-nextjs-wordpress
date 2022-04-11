@@ -72,13 +72,15 @@ export default function Header({  }) {
                                 <img src={globalData.siteOptions.siteLogo.mediaItemUrl} alt={`${globalData.globalOptions.generalSettingsTitle} Logo`} className="w-full max-w-40" />
                             </a>
                         </Link>
-                        <PhoneNumber 
-                            showPrefix
-                            showLocation
-                            prefixClasses="hidden mr-2 lg:inline"
-                            locationClasses="inline-block mr-2"
-                            numberClasses="inline-block font-bold hover:text-secondary focus:text-secondary"
-                        />
+                        <div className="ml-auto text-xl text-primary">
+                            <PhoneNumber 
+                                showPrefix
+                                showLocation
+                                prefixClasses="hidden mr-2 lg:inline"
+                                locationClasses="inline-block mr-2"
+                                numberClasses="inline-block font-bold hover:text-secondary focus:text-secondary"
+                            />
+                        </div>
                     </div>
                 </Container>
 
