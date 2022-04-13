@@ -37,7 +37,7 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     let expiryDate = expires.getTime();
 
     /* Matching function to match the query param to the ID of a location in ald.json */
-    function matchPPC(queryType, ppcOrSeo) {
+    function matchQuery(queryType, ppcOrSeo) {
         // Loop through our ALD locations
         Object.keys(ALD[queryType]).forEach((item) => {
             // Get all of the location IDs from the locations. Will return an array of IDs
@@ -72,6 +72,7 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
                 store.set('ald', {
                     location: ALD[queryType][item].objectName,
                     number: formattedNumber,
+                    query: physicalLoc ? physicalLoc : '' || interestLoc ? interestLoc : '' || campaignQuery ? campaignQuery : '' || locationPage ? locationPage : '',
                     expiry: expiryDate,
                 });
                 
@@ -84,18 +85,21 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
 
     /* Check if we have a new query param and update the local storage */
     // If we have a physical or interest locations query param then pass through 'locations' to perform a location query
-    if(physicalLoc || interestLoc) {
-        matchPPC("locations", "ppc");
-    }
+    // if(physicalLoc || interestLoc) {
+    //     console.log('ppc location search');
+    //     matchPPC("locations", "ppc");
+    // }
 
-    // If we have a campaign query param then pass through 'campaigns' to perform a location query
-    if(campaignQuery) {
-        matchPPC("campaigns", "ppc");
-    }
+    // // If we have a campaign query param then pass through 'campaigns' to perform a location query
+    // if(campaignQuery) {
+    //     console.log('campaign query');
+    //     matchPPC("campaigns", "ppc");
+    // }
 
-    if(locationPage) {
-        matchPPC("locations", "seo");
-    }
+    // if(locationPage) {
+    //     console.log('location page');
+    //     matchPPC("locations", "seo");
+    // }
 
     /* Check if we have existing local storage items
        No query string passed to the URL so we use the stored values as long as they are not expired */
@@ -110,16 +114,30 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
         else {
             store.clearAll();
         }
+
+        // We have values stored, so lets check to see if they're the same as what we have passed from the query        
+        // if the stored value ID is NOT the same as the query we need to update the query then we need to reset our query variables
+        if(store.get('ald').query !== physicalLoc || store.get('ald').query !== interestLoc || store.get('ald').query !== campaignQuery || store.get('ald').query !== locationPage) {
+            if(physicalLoc || interestLoc) {
+                matchQuery("locations");
+            }
+            else if(campaignQuery) {
+                matchQuery("campaigns");
+            }
+            // else if (locationPage) {
+            //     matchQuery("locations", "seo");
+            // }
+        }
     }
     else { // We don't have any values set so we can check if the query string matches.
         if(physicalLoc || interestLoc) {
-            matchPPC("locations");
+            matchQuery("locations");
         }
         else if(campaignQuery) {
-            matchPPC("campaigns");
+            matchQuery("campaigns");
         }
         else if (locationPage) {
-            matchPPC("locations", "seo");
+            matchQuery("locations", "seo");
         }
     }
 
