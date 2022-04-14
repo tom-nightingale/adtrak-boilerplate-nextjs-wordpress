@@ -8,7 +8,6 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     const globalData = useGlobalContext();
     const router = useRouter();
     
-
     const physicalLoc = router.query.physical_loc ? router.query.physical_loc : null;
     const interestLoc = router.query.interest_loc ? router.query.interest_loc : null;
     // const gCLID = router.query.GCLID ? router.query.GCLID : null;
@@ -17,8 +16,6 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
     // Below is used to capture the slug of the location page 
     // So we can set the SEO phone number to the right location
     const locationPage = router.pathname.includes('locations') ? router.query.slug : null;
-
-
 
     // Set some default variables that we'll overwrite with ALD values
     let phoneNumber = globalData.siteOptions.defaultPhoneNumber;
@@ -58,7 +55,7 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
                     queryPhoneNumber = ALD[queryType][item].seoNumber.length > 0 ? ALD[queryType][item].seoNumber.replace(/ /g, "") : phoneNumber; // remove any spaces from the string
                 }
 
-                console.log(queryPhoneNumber);
+                // console.log(queryPhoneNumber);
                 
                 let formattedNumber = ""; // Placeholder variable that we'll add our formatted number into
                 let offset = 0; // Set a default offset as 0 - we'll change this later as we loop through our array.
@@ -72,6 +69,7 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
                 store.set('ald', {
                     location: ALD[queryType][item].objectName,
                     number: formattedNumber,
+                    source: physicalLoc ? 'ppc' : '' || interestLoc ? 'ppc' : '' || campaignQuery ? 'ppc' : '' || locationPage ? 'seo' : '',
                     query: physicalLoc ? physicalLoc : '' || interestLoc ? interestLoc : '' || campaignQuery ? campaignQuery : '' || locationPage ? locationPage : '',
                     expiry: expiryDate,
                 });
@@ -82,24 +80,6 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
             }
         });
     }
-
-    /* Check if we have a new query param and update the local storage */
-    // If we have a physical or interest locations query param then pass through 'locations' to perform a location query
-    // if(physicalLoc || interestLoc) {
-    //     console.log('ppc location search');
-    //     matchPPC("locations", "ppc");
-    // }
-
-    // // If we have a campaign query param then pass through 'campaigns' to perform a location query
-    // if(campaignQuery) {
-    //     console.log('campaign query');
-    //     matchPPC("campaigns", "ppc");
-    // }
-
-    // if(locationPage) {
-    //     console.log('location page');
-    //     matchPPC("locations", "seo");
-    // }
 
     /* Check if we have existing local storage items
        No query string passed to the URL so we use the stored values as long as they are not expired */
@@ -115,18 +95,17 @@ export default function PhoneNumber({ showPrefix, showLocation, prefixClasses, l
             store.clearAll();
         }
 
-        // We have values stored, so lets check to see if they're the same as what we have passed from the query        
-        // if the stored value ID is NOT the same as the query we need to update the query then we need to reset our query variables
-        if(store.get('ald').query !== physicalLoc || store.get('ald').query !== interestLoc || store.get('ald').query !== campaignQuery || store.get('ald').query !== locationPage) {
+        if(!locationPage && store.get('ald').source === "seo") { //we're no longer on a location page, so we can clear the ALD values
+            store.clearAll();
+        }
+
+        if(store.get('ald').source === "ppc") {
             if(physicalLoc || interestLoc) {
                 matchQuery("locations");
             }
             else if(campaignQuery) {
                 matchQuery("campaigns");
             }
-            // else if (locationPage) {
-            //     matchQuery("locations", "seo");
-            // }
         }
     }
     else { // We don't have any values set so we can check if the query string matches.

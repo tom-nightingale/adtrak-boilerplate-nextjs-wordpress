@@ -16,7 +16,6 @@ export function useGlobalContext() {
 
 export default function App({ Component, pageProps, globalData }) {
     const router = useRouter();
-    console.log(router);
 
     // Detect page view changes and log with Google Analytics
     useEffect(() => {
