@@ -29,7 +29,7 @@ export default function ErrorPage() {
 
         <h1>Error 404.</h1>
 
-        <p>Well fuck something went wrong.</p>
+        <p>This page does not exist</p>
 
         <FancyLink destination="/" a11yText="Return to homepage" label="Return to homepage" extraClasses="" />
 

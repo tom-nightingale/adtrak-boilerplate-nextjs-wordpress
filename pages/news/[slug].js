@@ -5,6 +5,7 @@ import Header from '@/components/core/header'
 import Container from '@/components/container'
 import Hero from '@/components/hero'
 import Footer from '@/components/core/footer'
+import Aside from '@/components/aside'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -42,13 +43,13 @@ export default function Page({ post }) {
 
               <main className="lg:w-2/3">
 
-                <article className="content" dangerouslySetInnerHTML={createFullPostMarkup()} />
+                {post.content &&
+                  <article className="content" dangerouslySetInnerHTML={createFullPostMarkup()} />
+                }
 
               </main>
 
-              <aside className="bg-gray-100 lg:w-1/3">
-
-              </aside>
+              <Aside />
 
             </div>
 

@@ -1,9 +1,9 @@
-import { useGlobalContext } from '../../pages/_app'
-
+import { useGlobalContext } from '@/pages/_app'
 import Link from 'next/link'
 
 import Container from '@/components/container'
 import AdtrakLogo from '@/components/core/adtrakLogo'
+import SocialLinks from '@/components/socialLinks'
 
 export default function Footer({  }) {
     const globalData = useGlobalContext();
@@ -11,6 +11,12 @@ export default function Footer({  }) {
     return (
         <>
             <footer className="p-4 text-center bg-primary md:p-8 lg:px-0 lg:text-left">
+
+                <div className="flex flex-wrap items-center justify-center w-full mb-8 text-lg">
+                    <SocialLinks 
+                        linkClasses="mx-1" 
+                    />
+                </div>
 
                 <Container>
 

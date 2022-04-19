@@ -4,6 +4,7 @@ import Seo from '@/components/core/seo'
 import Header from '@/components/core/header'
 import Container from '@/components/container'
 import Hero from '@/components/hero'
+import Aside from '@/components/aside'
 import Footer from '@/components/core/footer'
 import { motion } from 'framer-motion'
 
@@ -45,9 +46,7 @@ export default function Home({ page }) {
 
               </main>
 
-              <aside className="bg-gray-100 lg:w-1/3">
-                
-              </aside>
+              <Aside />
 
             </div>
 

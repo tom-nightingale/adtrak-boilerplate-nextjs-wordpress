@@ -5,6 +5,7 @@ import Layout from '@/components/core/layout'
 import Header from '@/components/core/header'
 import Footer from '@/components/core/footer'
 import Container from '@/components/container'
+import Aside from '@/components/aside'
 
 import { motion } from 'framer-motion'
 
@@ -35,16 +36,14 @@ export default function Page({ page }) {
             <div className="flex flex-col my-8 lg:flex-row lg:my-16 lg:space-x-12">
 
               <main className="lg:w-2/3">
-
-                <article className="content" dangerouslySetInnerHTML={createFullPostMarkup()} />
+                
+                {page.content &&
+                  <article className="content" dangerouslySetInnerHTML={createFullPostMarkup()} />
+                }
 
               </main>
 
-              <aside className="bg-gray-100 lg:w-1/3">
-
-                aside
-                
-              </aside>
+              <Aside />
 
             </div>
 

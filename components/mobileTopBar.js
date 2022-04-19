@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import PhoneNumber from "@/components/phoneNumber";
 import { FiMenu, FiX, FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 export default function MobileTopBar({ globalData }) {
@@ -15,9 +16,13 @@ export default function MobileTopBar({ globalData }) {
     return (
         <>
             <div className="fixed z-50 flex flex-wrap w-full bg-primary lg:hidden">
-                <a className="w-1/2 p-2 text-center bg-secondary" href={`tel:${globalData.siteOptions.defaultPhoneNumber}`}>
+                {/* <a className="w-1/2 p-2 text-center bg-secondary" href={`tel:${globalData.siteOptions.defaultPhoneNumber}`}>
                     {globalData.siteOptions.defaultPhoneNumber}
-                </a>
+                </a> */}
+
+                <PhoneNumber
+                    numberClasses="w-1/2 p-2 text-center bg-secondary"
+                />
 
                 <button onClick={() => setMenuOpen(!isMenuOpen)} title="Toggle Mobile Menu" className="flex items-center justify-center w-1/2 p-2 text-center bg-primary" data-mobile-menu-toggle>
                     <FiMenu />

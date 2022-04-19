@@ -32,7 +32,7 @@ export default function Header({  }) {
                                                     <a className="relative block p-4 text-gray-500 hover:text-black focus:text-black">
                                                         {item.node.label}
                                                         {item.node.childItems.edges.length > 0 && 
-                                                            <span className="">
+                                                            <span className="absolute bottom-0 transform -translate-x-1/2 left-1/2">
                                                                 <FiChevronDown />
                                                             </span>
                                                         }
@@ -64,15 +64,14 @@ export default function Header({  }) {
                     
                 </div>
 
-
                 <Container>
                     <div className="flex flex-wrap items-center">
                         <Link href="/">
-                            <a className="block py-8">
+                            <a className="block py-8 mx-auto lg:m-0">
                                 <img src={globalData.siteOptions.siteLogo.mediaItemUrl} alt={`${globalData.globalOptions.generalSettingsTitle} Logo`} className="w-full max-w-40" />
                             </a>
                         </Link>
-                        <div className="ml-auto text-xl text-primary">
+                        <div className="hidden ml-auto text-xl text-primary lg:block">
                             <PhoneNumber 
                                 showPrefix
                                 showLocation
@@ -87,7 +86,7 @@ export default function Header({  }) {
                 <div className="hidden border-t border-gray-300 lg:block">
                     <Container>
                         <nav id="menu-primary" role="navigation" className="xl:ml-auto xl:pl-8 md:w-full xl:flex-1 menu-primary" aria-label="Site Main Navigation">
-                            <ul className="flex flex-wrap items-center xl:justify-end">
+                            <ul className="flex flex-wrap items-center lg:justify-between xl:justify-end">
                                 {globalData.primaryMenu.map((item, key) => {
                                     if(!item.node.parentId) {
                                         return(

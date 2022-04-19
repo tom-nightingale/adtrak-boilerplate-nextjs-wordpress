@@ -7,6 +7,7 @@ import Hero from '@/components/hero'
 import Footer from '@/components/core/footer'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Aside from '@/components/aside'
 import { CorporateContactJsonLd } from 'next-seo'
 
 
@@ -58,9 +59,7 @@ export default function Page({ page, posts }) {
 
               </main>
 
-              <aside className="bg-gray-100 lg:w-1/3">
-
-              </aside>
+              <Aside />
 
             </div>
 
