@@ -9,6 +9,8 @@ import Footer from '@/components/core/footer'
 import { motion } from 'framer-motion'
 
 export default function Home({ page }) {  
+
+  console.log(page);
   
   const createFullPostMarkup = () => {
       return { __html: `<h1>${page.title}</h1>${ page.content }` }
